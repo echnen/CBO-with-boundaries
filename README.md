@@ -4,9 +4,14 @@ This repository contains the experimental source code to reproduce the numerical
 
 * J. Beddrich, E. Chenchene, M. Fornasier, H. Huang, B. Wohlmuth. Constrained Consensus-Based Optimization and Numerical Heuristics for the Low Particle Regime. 2024. [ArXiv preprint](https://arxiv.org/abs/XXXX.YYYYY)
 
-To reproduce the results of the numerical experiments in Section 3, run:
+To reproduce the results of the numerical experiments in Sections 5.1 and 5.2, run:
 ```bash
-python3 main.py
+python3 rastrigin/main.py
+```
+
+To reproduce the results of the numerical experiments in Section 5.3, run:
+```bash
+python3 p-allen-cahn/main.py
 ```
 
 If you find this code useful, please cite the above-mentioned paper:
