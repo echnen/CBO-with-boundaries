@@ -15,7 +15,7 @@ class pAllenCahnSolver:
         self.lower_obstacle_func = glow 
         self.upper_obstacle_func = gup       
 
-    def __call__(self, n_iter=100, lamda=1, sigma=7, dt=0.01, seed=42): 
+    def __call__(self, n_iter=100, lamda=1, sigma=7, dt=0.01, seed=42, track_names=['consensus', 'energy', 'x'], os=1, caseID=""): 
     
         # set random seed 
         np.random.seed(seed)
@@ -35,20 +35,21 @@ class pAllenCahnSolver:
             'seed' : seed 
         }
 
-        self.track_args = {'names':['consensus', 'energy', 'x'], 'save_int': 1}
+
+        self.track_args = {'names':track_names, 'save_int': os}
 
         ########################################################################
         # Create and store obstacles 
 
         if self.lower_obstacle_func is not None: 
             g_lower_p = np.tile(self.lower_obstacle_func(np.linspace(0,1,n_points+2)[1:-1] ), (n_particles, 1))[None, ...]    
-            data['lower_obstacle'] = g_lower_p    
+            data['lower_obstacle'] = g_lower_p[0,0,:]  
         else: 
             g_lower_p = None 
 
         if self.upper_obstacle_func is not None: 
             g_upper_p = np.tile(self.upper_obstacle_func(np.linspace(0,1,n_points+2)[1:-1] ), (n_particles, 1))[None, ...]    
-            data['upper_obstacle'] = g_upper_p
+            data['upper_obstacle'] = g_upper_p[0,0,:]
         else: 
             g_upper_p = None 
 
@@ -60,7 +61,7 @@ class pAllenCahnSolver:
 
         # Initialize particles around the
         x = np.linspace(bd_left, bd_right, n_points)
-        x = np.tile(x, (n_particles * 100, 1))[None, ...]
+        x = np.tile(x, (n_particles +1 , 1))[None, ...]
         x += hat_function_noise(32).sample(0.1*np.ones(x.shape))
         idx = np.argpartition(self.p_allen_cahn_objective(x), n_particles)
         x = x[:,idx[0,:n_particles],:]
@@ -99,9 +100,8 @@ class pAllenCahnSolver:
             x += dyn.x 
 
             data[idx] = {}
-            data[idx]['hist_consensus'] =   dyn.history['consensus']
-            data[idx]['hist_energy'] =      dyn.history['energy']
-            data[idx]['hist_x'] =           dyn.history['x']   
+            for track_name in track_names: 
+                data[idx]['hist_' + track_name] =   dyn.history[track_name]
 
         # create filename 
         filename = "p-allen-cahn/data/pAC"
@@ -114,6 +114,7 @@ class pAllenCahnSolver:
         filename += '_lbd_' + str(lamda)
         filename += '_ne_' + str(n_eval) 
         filename += '_s_' + str(seed)
+        filename += caseID
         filename += ".pickle"
 
         with open(filename, "wb") as output_file:

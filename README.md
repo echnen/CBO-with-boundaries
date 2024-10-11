@@ -9,8 +9,10 @@ To reproduce the results of the numerical experiments in Sections 5.1 and 5.2, r
 python3 rastrigin/main.py
 ```
 
-To reproduce the results of the numerical experiments in Section 5.3, run:
+To reproduce the results of the numerical experiments in Section 5.3, run the following commands. Be aware that these simulations require significant time and memory. 
 ```bash
+mkdir p-allen-cahn/data 
+mkdir p-allen-cahn/images 
 python3 p-allen-cahn/main.py
 ```
 
