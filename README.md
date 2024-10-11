@@ -9,8 +9,9 @@ To reproduce the results of the numerical experiments in Sections 5.1 and 5.2, r
 python3 rastrigin/main.py
 ```
 
-To reproduce the results of the numerical experiments in Section 5.3, run the following commands. Be aware that these simulations require significant time and memory. 
+To reproduce the results of the numerical experiments in Section 5.3, run the following commands. Be aware that these simulations might require significant time and memory (5.6GB). 
 ```bash
+pip install cbx 
 mkdir p-allen-cahn/data 
 mkdir p-allen-cahn/images 
 python3 p-allen-cahn/main.py
@@ -34,6 +35,7 @@ Please make sure to have the following Python modules installed, most of which s
 * [numpy>=1.20.1](https://pypi.org/project/numpy/)
 * [matplotlib>=3.3.4](https://pypi.org/project/matplotlib/)
 * [tqdm>=4.66.1](https://pypi.org/project/tqdm/)
+* [cbx>=Commit7b29285(https://github.com/PdIPS/CBXpy/tree/main)]
 
 ## Acknowledgments  
 
