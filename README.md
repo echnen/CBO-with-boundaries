@@ -35,7 +35,7 @@ Please make sure to have the following Python modules installed, most of which s
 * [numpy>=1.20.1](https://pypi.org/project/numpy/)
 * [matplotlib>=3.3.4](https://pypi.org/project/matplotlib/)
 * [tqdm>=4.66.1](https://pypi.org/project/tqdm/)
-* [cbx>=Commit7b29285(https://github.com/PdIPS/CBXpy/tree/main)]
+* [cbx>=Commit7b29285](https://github.com/PdIPS/CBXpy/tree/main)
 
 ## Acknowledgments  
 
