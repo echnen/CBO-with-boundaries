@@ -125,7 +125,7 @@ def optimize_large_scale(maxit, dom):
 
 def optimize_middle_scale(lam, sig, dom):
     '''
-    We try to optimize the Rastriagin function in middle-scale dimensions for
+    We try to optimize the Rastrigin function in middle-scale dimensions for
     several parameters
     '''
 
