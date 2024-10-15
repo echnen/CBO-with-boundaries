@@ -2,7 +2,7 @@
 
 This repository contains the experimental source code to reproduce the numerical experiments in:
 
-* J. Beddrich, E. Chenchene, M. Fornasier, H. Huang, B. Wohlmuth. Constrained Consensus-Based Optimization and Numerical Heuristics for the Low Particle Regime. 2024. [ArXiv preprint](https://arxiv.org/abs/XXXX.YYYYY)
+* J. Beddrich, E. Chenchene, M. Fornasier, H. Huang, B. Wohlmuth. Constrained Consensus-Based Optimization and Numerical Heuristics for the Low Particle Regime. 2024. [ArXiv preprint](https://arxiv.org/abs/2410.10361)
 
 To reproduce the results of the numerical experiments in Sections 5.1 and 5.2, run:
 ```bash
@@ -22,7 +22,7 @@ If you find this code useful, please cite the above-mentioned paper:
 @article{bcfhw24,
   author = {Beddrich, Jonas and Chenchene, Enis and Fornasier, Massimo and Huang, Hui and Wohlmuth, Barbara},
   title = {Constrained Consensus-Based Optimization and Numerical Heuristics for the Low Particle Regime},
-  pages = {XXXX.YYYYY},
+  pages = {2410.10361},
   journal = {ArXiv},
   year = {2024}
 }
