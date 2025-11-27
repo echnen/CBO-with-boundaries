@@ -40,6 +40,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import cbo as opt
+from scipy.stats import gmean
 
 mpl.rcParams.update({'font.size': 15})
 
@@ -337,4 +338,52 @@ def plot_domains(hx, Function='Rastrigin', Save=False):
     plt.legend(bbox_to_anchor=(1.05, -0.05), ncol=2)
     if Save:
         plt.savefig('Results/domain_4.pdf', bbox_inches='tight')
+    plt.show()
+
+
+def plot_experiment_heuristics(Vs_tot, dt, maxit, Ss):
+    """
+    Plotting experiment heurisitcs
+    """
+
+    num_of_runs, maxit, ref_S, _ = Vs_tot.shape
+
+    # the case with only Heuristic Exploration activated
+    plt.figure(figsize=(6, 4))
+    for t in range(num_of_runs):
+
+        plt.semilogy(Ss, Vs_tot[t, -1, :, 0], '*', color='black',
+                     linewidth=1, alpha=0.1)
+
+    plt.semilogy(Ss, gmean(Vs_tot[:, -1, :, 0], axis=0), color='black',
+                 linewidth=2, alpha=1)
+    plt.xlim(Ss[0], Ss[-1])
+    plt.ylabel(r'$W_2^2(\rho_T^N, \delta_{x^*})$')
+    plt.xlabel(r'Exploration Parameter $S$')
+    plt.ylim(1e-13, 1e1)
+    plt.xlim(Ss[0], 8)
+    plt.axvline(x=1, color='red', linewidth=2)
+    plt.grid(which='both')
+
+    plt.savefig("Results/testing_heuristics_with_ball.pdf", bbox_inches='tight')
+    plt.show()
+
+    # the case with Heuristic Ball activated
+    plt.figure(figsize=(6, 4))
+    for t in range(num_of_runs):
+
+        plt.semilogy(Ss, Vs_tot[t, -1, :, 1], '*', color='black',
+                     linewidth=1, alpha=0.1)
+
+    plt.semilogy(Ss, gmean(Vs_tot[:, -1, :, 1], axis=0), color='black',
+                 linewidth=2, alpha=1)
+    plt.xlim(Ss[0], Ss[-1])
+    plt.ylim(1e-13, 1e1)
+    plt.xlim(Ss[0], 8)
+    plt.axvline(x=1, color='red', linewidth=2)
+    plt.ylabel(r'$W_2^2(\rho_T^N, \delta_{x^*})$')
+    plt.xlabel(r'Exploration Parameter $S$')
+    plt.grid(which='both')
+
+    plt.savefig("Results/testing_heuristics_without_ball.pdf", bbox_inches='tight')
     plt.show()

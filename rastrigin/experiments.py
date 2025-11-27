@@ -39,6 +39,7 @@ Particle Regime,
 import numpy as np
 import cbo as opt
 from tqdm import trange
+from tqdm import tqdm
 
 
 def parameter_test_multiple(num_of_runs, maxit, dom, noise_type='isotropic'):
@@ -123,6 +124,47 @@ def optimize_large_scale(maxit, dom):
     return Vs_tot, dt, maxit
 
 
+def optimize_large_scale_standard(maxit, dom):
+    '''
+    We try to optimize the Rastrigin function in high dimensions using the
+    standard CBO method
+    '''
+    num_of_runs = 20
+
+    # model parameters
+    d = 100
+    x_opt = np.zeros(d)
+
+    # algorithm parameters
+    dt = 1e-2
+    alpha = 1e6
+    N = 10000
+
+    # algorithms parameters
+    lam = 1
+    sig = np.sqrt(2 * lam)
+    gamma = .95
+
+    # placeholders for plots
+    Vs_tot = np.zeros((num_of_runs, maxit))
+
+    for it in trange(num_of_runs, desc="Optimizing", leave=False):
+
+        # starting point
+        mean = 5.12 * np.ones((d, N)) / np.sqrt(d)
+        variance = 1e1
+        X0 = dom.proj(np.random.normal(mean, variance, (d, N)))
+
+        # optimizing
+        Vs = opt.cbo(dt, sig, lam, alpha, X0, d, N, x_opt,
+                     maxit, 'anisotropic', gamma, dom, function='Rastrigin',
+                     Heating=False, Ball=False, Plot=False, Verbose=True)
+
+        Vs_tot[it, :] = Vs
+
+    return Vs_tot, dt, maxit
+
+
 def optimize_middle_scale(lam, sig, dom):
     '''
     We try to optimize the Rastrigin function in middle-scale dimensions for
@@ -168,6 +210,58 @@ def optimize_middle_scale(lam, sig, dom):
                 Vs_tot[t, :, cnt_d, cnt_gamma] = Vs
 
     return Vs_tot, dt, maxit, Ds, Gammas
+
+
+def testing_heuristics(dom):
+    '''
+    We test the beneficial effect of the two introduced heurisitcs.
+    '''
+
+    num_of_runs = 5
+    ref_S = 50
+    maxit = 1000
+
+    # algorithm parameters
+    dt = 1e-2
+    alpha = 1e6
+    N = 1000
+    gamma = 0.75
+    d = 5
+
+    # drifting parameter
+    lam = 1
+
+    # testing the following exploration parameters
+    Ss = np.linspace(0.5, 10, ref_S)
+    Ball_Bools = [True, False]
+
+    # placeholders for plots
+    Vs_tot = np.zeros((num_of_runs, maxit, ref_S, 2))
+
+    for cnt_S, S in tqdm(enumerate(Ss), total=len(Ss)):
+
+        sig = S * np.sqrt(2 * lam)
+        for (cnt_ball, Ball_Bool) in enumerate(Ball_Bools):
+
+            # optimal solution
+            x_opt = np.zeros(d)
+
+            for t in range(num_of_runs):
+
+                # starting point
+                mean = 5.12 * np.ones((d, N)) / np.sqrt(d)
+                variance = 1e1
+                X0 = dom.proj(np.random.normal(mean, variance, (d, N)))
+
+                # optimizing
+                Vs = opt.cbo(dt, sig, lam, alpha, X0, d, N, x_opt,
+                             maxit, 'anisotropic', gamma, dom,
+                             function='Rastrigin',
+                             Heating=True, Ball=Ball_Bool, Verbose=False)
+
+                Vs_tot[t, :, cnt_S, cnt_ball] = Vs
+
+    return Vs_tot, dt, maxit, Ss
 
 
 def experiment_non_convex_domain(dom_name):

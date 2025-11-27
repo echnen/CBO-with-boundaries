@@ -47,7 +47,7 @@ if __name__ == "__main__":
     pathlib.Path("Results").mkdir(parents=True, exist_ok=True)
 
     print("------------------------------------------------------------------")
-    print("\n\n *** Generating Figure 2 ***\n")
+    print("\n\n *** Experiment 1 ***\n")
 
     dom = opt.Domain('Box', np.array([-6.12, 5.12]))
     Out0 = expm.parameter_test_multiple(100, 100, dom, noise_type='isotropic')
@@ -59,13 +59,13 @@ if __name__ == "__main__":
 
     show.plot_testing_boundedness_iso(Out0[0], Out0[1], [Out0[2], Out1[2]],
                                       [Out0[3], Out1[3]],
-                                   'Results/testing_boundedness_isotropic.pdf')
+                                    'Results/testing_boundedness_isotropic.pdf')
     show.plot_testing_boundedness_ani(Out0[0], Out0[1], [Out2[2], Out3[2]],
                                       [Out2[3], Out3[3]],
-                                 'Results/testing_boundedness_anisotropic.pdf')
+                                  'Results/testing_boundedness_anisotropic.pdf')
 
     print("------------------------------------------------------------------")
-    print("\n\n *** Generating Figure 3 ***\n")
+    print("\n\n *** Experiment 2 ***\n")
 
     lam = 1
     sig = 5 * np.sqrt(2 * lam)
@@ -89,8 +89,16 @@ if __name__ == "__main__":
     show.plot_experiment_large_scale_many(*Out7,
                                     'Results/middle_scale_in_interior_feas.pdf')
 
+
     print("------------------------------------------------------------------")
-    print("\n\n *** Generating Figure 4 ***\n")
+    print("\n\n *** Experiment 3 ***\n")
+
+    dom = opt.Domain('unconstrained')
+    Vs_tot, dt, maxit, Ss = expm.testing_heuristics(dom)
+    show.plot_experiment_heuristics(Vs_tot, dt, maxit, Ss)
+
+    print("------------------------------------------------------------------")
+    print("\n\n *** Experiment 4 ***\n")
 
     dom = opt.Domain('Box', np.array([0, 11.24]))
     Out8 = expm.optimize_large_scale(1000, dom)
@@ -100,8 +108,13 @@ if __name__ == "__main__":
     Out9 = expm.optimize_large_scale(10000, dom)
     show.plot_residuals(Out9[0], Out9[1], 'Results/large_scale_unbounded.pdf')
 
+    dom = opt.Domain('unconstrained')
+    Out9bis = expm.optimize_large_scale_standard(10000, dom)
+    show.plot_residuals(Out9bis[0], Out9bis[1],
+                        'Results/large_scale_unbounded_standard.pdf')
+
     print("------------------------------------------------------------------")
-    print("\n\n *** Generating Figure 5 ***\n")
+    print("\n\n *** Experiment 5 ***\n")
 
     Out9 = expm.experiment_non_convex_domain('noncvx1')
     show.plot_experiment_large_scale_many(*Out9, 'Results/nncvx_domain_1.pdf')
