@@ -2,15 +2,16 @@
 
 This repository contains the experimental source code to reproduce the numerical experiments in:
 
-* J. Beddrich, E. Chenchene, M. Fornasier, H. Huang, B. Wohlmuth. Constrained Consensus-Based Optimization and Numerical Heuristics for the Low Particle Regime. 2024. [ArXiv preprint](https://arxiv.org/abs/XXXX.YYYYY)
+* J. Beddrich, E. Chenchene, M. Fornasier, H. Huang, B. Wohlmuth. Constrained Consensus-Based Optimization and Numerical Heuristics for the Low Particle Regime. 2024. [ArXiv preprint](https://arxiv.org/abs/2410.10361)
 
 To reproduce the results of the numerical experiments in Sections 5.1 and 5.2, run:
 ```bash
 python3 rastrigin/main.py
 ```
 
-To reproduce the results of the numerical experiments in Section 5.3, run the following commands. Be aware that these simulations require significant time and memory. 
+To reproduce the results of the numerical experiments in Section 5.3, run the following commands. Be aware that these simulations might require significant time and memory (5.6GB). 
 ```bash
+pip install cbx 
 mkdir p-allen-cahn/data 
 mkdir p-allen-cahn/images 
 python3 p-allen-cahn/main.py
@@ -21,7 +22,7 @@ If you find this code useful, please cite the above-mentioned paper:
 @article{bcfhw24,
   author = {Beddrich, Jonas and Chenchene, Enis and Fornasier, Massimo and Huang, Hui and Wohlmuth, Barbara},
   title = {Constrained Consensus-Based Optimization and Numerical Heuristics for the Low Particle Regime},
-  pages = {XXXX.YYYYY},
+  pages = {2410.10361},
   journal = {ArXiv},
   year = {2024}
 }
@@ -34,6 +35,7 @@ Please make sure to have the following Python modules installed, most of which s
 * [numpy>=1.20.1](https://pypi.org/project/numpy/)
 * [matplotlib>=3.3.4](https://pypi.org/project/matplotlib/)
 * [tqdm>=4.66.1](https://pypi.org/project/tqdm/)
+* [cbx>=Commit7b29285](https://github.com/PdIPS/CBXpy/tree/main)
 
 ## Acknowledgments  
 

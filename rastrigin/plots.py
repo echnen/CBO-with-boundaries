@@ -11,7 +11,7 @@
 #      J. Beddrich, E. Chenchene, M. Fornasier, H. Huang, B. Wohlmuth.
 #      Constrained Consensus-Based Optimization and Numerical Heuristics for
 #      the Low Particle Regime,
-#      2024. DOI: XX.XXXXX/arXiv.XXXX.YYYYY.
+#      2024. DOI: 10.48550/arXiv.2410.10361.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ experiments in Sections 5.1 and 5.2 of:
 J. Beddrich, E. Chenchene, M. Fornasier, H. Huang, B. Wohlmuth.
 Constrained Consensus-Based Optimization and Numerical Heuristics for the Low
 Particle Regime,
-2024. DOI: XX.XXXXX/arXiv.XXXX.YYYYY.
+2024. DOI: 10.48550/arXiv.2410.10361.
 
 """
 
