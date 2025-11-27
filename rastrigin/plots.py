@@ -36,11 +36,11 @@ Particle Regime,
 
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib as mpl
+import numpy as np # type: ignore
+import matplotlib.pyplot as plt # type: ignore
+import matplotlib as mpl # type: ignore
 import cbo as opt
-from scipy.stats import gmean
+from scipy.stats import gmean # type: ignore
 
 mpl.rcParams.update({'font.size': 15})
 
@@ -386,4 +386,93 @@ def plot_experiment_heuristics(Vs_tot, dt, maxit, Ss):
     plt.grid(which='both')
 
     plt.savefig("Results/testing_heuristics_without_ball.pdf", bbox_inches='tight')
+    plt.show()
+def plot_experiment_number_particles(Vs_tot, dt, maxit, Ds, Gammas, Ns, title):
+
+    num_of_runs = Vs_tot.shape[0]
+
+    # creating data
+    Times = np.array([k * dt for k in range(maxit)])
+    mev = maxit // 10
+
+    num_Gammas = len(Gammas)
+    num_Ns = len(Ns)
+
+    fig, ax = plt.subplots(num_Ns, num_Gammas, layout='constrained', figsize=(7, 7), sharey=True, sharex=True)
+    for (cnt_rad, Rad) in enumerate(Gammas):
+        for (cnt_N, N) in enumerate(Ns):
+            for t in range(num_of_runs):
+
+                ax[cnt_N, cnt_rad].semilogy(Times,
+                                            Vs_tot[t, :, cnt_rad, cnt_N],
+                                            color='black',
+                                            linewidth=1, alpha=0.1)
+                ax[cnt_N, cnt_rad].set_xlim(Times[0], Times[-1])
+
+            ax[cnt_N, cnt_rad].semilogy(Times,
+                                        np.mean(Vs_tot[:, :, cnt_rad, cnt_N],
+                                                axis=0), '-*', color='black',
+                                        linewidth=2, markersize=6,
+                                        markevery=mev, label='mean')
+            ax[cnt_N, cnt_rad].set_xlim(Times[0], Times[-1])
+
+            if cnt_rad == 0:
+                ax[cnt_N, cnt_rad].set_ylabel(r'$W_2^2(\rho_t^N, \delta_{x^*})$,' + f' for $N={N}$')
+
+            if cnt_N == 0:
+                if Rad == "CBO":
+                    ax[cnt_N, cnt_rad].set_title(rf'$CBO$')
+                else: 
+                    ax[cnt_N, cnt_rad].set_title(rf'$\gamma = {Rad}$')
+
+            if cnt_N == num_Ns - 1:
+                ax[cnt_N, cnt_rad].set_xlabel(r'Time $t$')
+
+            ax[cnt_N, cnt_rad].grid(which='both')
+    plt.savefig(title, bbox_inches='tight')
+    plt.show()
+
+
+def plot_experiment_number_particles_comparison(Vs_tot, dt, maxit, Ds, Gammas, Ns, title):
+    
+    num_Ds = len(Ds)
+    cmap = plt.get_cmap("inferno")
+    markers = ['o', 'd', 's', 'v']
+
+    fig, ax = plt.subplots(1, num_Ds, layout='constrained', figsize=(12, 4), sharey=True, sharex=True)
+    for (cnt_d, d) in enumerate(Ds):
+        for (cnt_rad, Rad) in enumerate(Gammas):
+            # acc_min = [] 
+            acc_mean = [] 
+            # acc_max = [] 
+            for (cnt_N, N) in enumerate(Ns):
+                # acc_min.append(np.min(Vs_tot[:, :, cnt_d, cnt_rad, cnt_N],axis=0)[-1])
+                acc_mean.append(np.mean(Vs_tot[:, :, cnt_d, cnt_rad, cnt_N],axis=0)[-1])
+                # acc_max.append(np.max(Vs_tot[:, :, cnt_d, cnt_rad, cnt_N],axis=0)[-1])
+            if isinstance(Rad, float): 
+                cmap = plt.get_cmap("inferno")
+                label = rf"$\gamma={Rad}$"
+            else: 
+                if "CBO" in Rad: 
+                    cmap = plt.get_cmap("cividis")
+                else: 
+                    cmap = plt.get_cmap("viridis")    
+                label = Rad
+            
+            color = cmap(0.1 + 0.8 * cnt_rad / (len(Gammas)-1))
+            # ax[cnt_d].loglog(Ns, acc_min, linestyle=":", color=color)        
+            ax[cnt_d].loglog(Ns, acc_mean, label=label, color=color, marker = markers[cnt_rad])        
+            # ax[cnt_d].loglog(Ns, acc_max, linestyle="--", color=color)        
+            # ax[cnt_d].fill_between(Ns, acc_min, acc_max, color=color, alpha=0.1)
+
+        ax[cnt_d].set_xlabel(r'particles $N$')
+        ax[cnt_d].set_ylim([1e-13,1e6])
+        ax[cnt_d].set_title(rf'$d = {d}$')
+        ax[cnt_d].grid('on')
+    
+    handles, labels = ax[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc='upper center', ncol=len(labels), bbox_to_anchor=(0.545, 0.93), framealpha=1)
+
+    ax[0].set_ylabel(r'$W_2^2(\rho_T^N, \delta_{x^*})$')
+    plt.savefig(title, bbox_inches='tight')
     plt.show()
