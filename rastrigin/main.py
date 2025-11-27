@@ -48,16 +48,15 @@ if __name__ == "__main__":
 
     print("------------------------------------------------------------------")
     print("\n\n *** Experiment 1 ***\n")
-    # print("------------------------------------------------------------------")
-    # print("\n\n *** Generating Figure 2 ***\n")
+    print("------------------------------------------------------------------")
 
-    # dom = opt.Domain('Box', np.array([-6.12, 5.12]))
-    # Out0 = expm.parameter_test_multiple(100, 100, dom, noise_type='isotropic')
-    # Out2 = expm.parameter_test_multiple(100, 100, dom, noise_type='anisotropic')
+    dom = opt.Domain('Box', np.array([-6.12, 5.12]))
+    Out0 = expm.parameter_test_multiple(100, 100, dom, noise_type='isotropic')
+    Out2 = expm.parameter_test_multiple(100, 100, dom, noise_type='anisotropic')
 
-    # dom = opt.Domain('unconstrained')
-    # Out1 = expm.parameter_test_multiple(100, 100, dom, noise_type='isotropic')
-    # Out3 = expm.parameter_test_multiple(100, 100, dom, noise_type='anisotropic')
+    dom = opt.Domain('unconstrained')
+    Out1 = expm.parameter_test_multiple(100, 100, dom, noise_type='isotropic')
+    Out3 = expm.parameter_test_multiple(100, 100, dom, noise_type='anisotropic')
 
     show.plot_testing_boundedness_iso(Out0[0], Out0[1], [Out0[2], Out1[2]],
                                       [Out0[3], Out1[3]],
@@ -68,41 +67,41 @@ if __name__ == "__main__":
 
     print("------------------------------------------------------------------")
     print("\n\n *** Experiment 2 ***\n")
-    # show.plot_testing_boundedness_iso(Out0[0], Out0[1], [Out0[2], Out1[2]],
-    #                                   [Out0[3], Out1[3]],
-    #                                'Results/testing_boundedness_isotropic.pdf')
-    # show.plot_testing_boundedness_ani(Out0[0], Out0[1], [Out2[2], Out3[2]],
-    #                                   [Out2[3], Out3[3]],
-    #                              'Results/testing_boundedness_anisotropic.pdf')
+    print("------------------------------------------------------------------")
 
-    # print("------------------------------------------------------------------")
-    # print("\n\n *** Generating Figure 3 ***\n")
+    show.plot_testing_boundedness_iso(Out0[0], Out0[1], [Out0[2], Out1[2]],
+                                      [Out0[3], Out1[3]],
+                                   'Results/testing_boundedness_isotropic.pdf')
+    show.plot_testing_boundedness_ani(Out0[0], Out0[1], [Out2[2], Out3[2]],
+                                      [Out2[3], Out3[3]],
+                                 'Results/testing_boundedness_anisotropic.pdf')
 
-    # lam = 1
-    # sig = 5 * np.sqrt(2 * lam)
-    # dom = opt.Domain('Box', np.array([0, 11.24]))
-    # Out4 = expm.optimize_middle_scale(lam, sig, dom)
-    # show.plot_experiment_large_scale_many(*Out4,
-    #                             'Results/middle_scale_on_boundary_not_feas.pdf')
-    # dom = opt.Domain('Box', np.array([-6.12, 5.12]))
-    # Out5 = expm.optimize_middle_scale(lam, sig, dom)
-    # show.plot_experiment_large_scale_many(*Out5,
-    #                             'Results/middle_scale_in_interior_not_feas.pdf')
+    lam = 1
+    sig = 5 * np.sqrt(2 * lam)
+    dom = opt.Domain('Box', np.array([0, 11.24]))
+    Out4 = expm.optimize_middle_scale(lam, sig, dom)
+    show.plot_experiment_large_scale_many(*Out4,
+                                'Results/middle_scale_on_boundary_not_feas.pdf')
+    dom = opt.Domain('Box', np.array([-6.12, 5.12]))
+    Out5 = expm.optimize_middle_scale(lam, sig, dom)
+    show.plot_experiment_large_scale_many(*Out5,
+                                'Results/middle_scale_in_interior_not_feas.pdf')
 
-    # lam = 1
-    # sig = np.sqrt(2 * lam)
-    # dom = opt.Domain('Box', np.array([0, 11.24]))
-    # Out6 = expm.optimize_middle_scale(lam, sig, dom)
-    # show.plot_experiment_large_scale_many(*Out6,
-    #                                 'Results/middle_scale_on_boundary_feas.pdf')
-    # dom = opt.Domain('Box', np.array([-6.12, 5.12]))
-    # Out7 = expm.optimize_middle_scale(lam, sig, dom)
-    # show.plot_experiment_large_scale_many(*Out7,
-    #                                 'Results/middle_scale_in_interior_feas.pdf')
+    lam = 1
+    sig = np.sqrt(2 * lam)
+    dom = opt.Domain('Box', np.array([0, 11.24]))
+    Out6 = expm.optimize_middle_scale(lam, sig, dom)
+    show.plot_experiment_large_scale_many(*Out6,
+                                    'Results/middle_scale_on_boundary_feas.pdf')
+    dom = opt.Domain('Box', np.array([-6.12, 5.12]))
+    Out7 = expm.optimize_middle_scale(lam, sig, dom)
+    show.plot_experiment_large_scale_many(*Out7,
+                                    'Results/middle_scale_in_interior_feas.pdf')
 
 
     print("------------------------------------------------------------------")
     print("\n\n *** Experiment 3 ***\n")
+    print("------------------------------------------------------------------")
 
     dom = opt.Domain('unconstrained')
     Vs_tot, dt, maxit, Ss = expm.testing_heuristics(dom)
@@ -110,16 +109,15 @@ if __name__ == "__main__":
 
     print("------------------------------------------------------------------")
     print("\n\n *** Experiment 4 ***\n")
-    # print("------------------------------------------------------------------")
-    # print("\n\n *** Generating Figure 4 ***\n")
+    print("------------------------------------------------------------------")
 
-    # dom = opt.Domain('Box', np.array([0, 11.24]))
-    # Out8 = expm.optimize_large_scale(1000, dom)
-    # show.plot_residuals(Out8[0], Out8[1], 'Results/large_scale_bounded.pdf')
+    dom = opt.Domain('Box', np.array([0, 11.24]))
+    Out8 = expm.optimize_large_scale(1000, dom)
+    show.plot_residuals(Out8[0], Out8[1], 'Results/large_scale_bounded.pdf')
 
-    # dom = opt.Domain('unconstrained')
-    # Out9 = expm.optimize_large_scale(10000, dom)
-    # show.plot_residuals(Out9[0], Out9[1], 'Results/large_scale_unbounded.pdf')
+    dom = opt.Domain('unconstrained')
+    Out9 = expm.optimize_large_scale(10000, dom)
+    show.plot_residuals(Out9[0], Out9[1], 'Results/large_scale_unbounded.pdf')
 
     dom = opt.Domain('unconstrained')
     Out9bis = expm.optimize_large_scale_standard(10000, dom)
@@ -128,17 +126,17 @@ if __name__ == "__main__":
 
     print("------------------------------------------------------------------")
     print("\n\n *** Experiment 5 ***\n")
-    # print("------------------------------------------------------------------")
-    # print("\n\n *** Generating Figure 5 ***\n")
+    print("------------------------------------------------------------------")
 
-    # Out9 = expm.experiment_non_convex_domain('noncvx1')
-    # show.plot_experiment_large_scale_many(*Out9, 'Results/nncvx_domain_1.pdf')
+    Out9 = expm.experiment_non_convex_domain('noncvx1')
+    show.plot_experiment_large_scale_many(*Out9, 'Results/nncvx_domain_1.pdf')
 
-    # Out10 = expm.experiment_non_convex_domain('noncvx2')
-    # show.plot_experiment_large_scale_many(*Out10, 'Results/nncvx_domain_2.pdf')
+    Out10 = expm.experiment_non_convex_domain('noncvx2')
+    show.plot_experiment_large_scale_many(*Out10, 'Results/nncvx_domain_2.pdf')
 
-    # Out11 = expm.experiment_number_particles()
-    # show.plot_experiment_number_particles(*Out11, 'Results/number_particles.pdf')
+    Out11 = expm.experiment_number_particles()
+    show.plot_experiment_number_particles(*Out11, 'Results/number_particles.pdf')
 
     Out12 = expm.experiment_number_particles_comparison_constrained()
-    show.plot_experiment_number_particles_comparison(*Out12, 'Results/number_particles_comparison_constrained.pdf')
+    show.plot_experiment_number_particles_comparison(*Out12,
+                                                     'Results/number_particles_comparison_constrained.pdf')

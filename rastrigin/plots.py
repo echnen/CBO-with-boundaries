@@ -36,11 +36,11 @@ Particle Regime,
 
 """
 
-import numpy as np # type: ignore
-import matplotlib.pyplot as plt # type: ignore
-import matplotlib as mpl # type: ignore
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib as mpl
 import cbo as opt
-from scipy.stats import gmean # type: ignore
+from scipy.stats import gmean
 
 mpl.rcParams.update({'font.size': 15})
 
@@ -422,7 +422,7 @@ def plot_experiment_number_particles(Vs_tot, dt, maxit, Ds, Gammas, Ns, title):
             if cnt_N == 0:
                 if Rad == "CBO":
                     ax[cnt_N, cnt_rad].set_title(rf'$CBO$')
-                else: 
+                else:
                     ax[cnt_N, cnt_rad].set_title(rf'$\gamma = {Rad}$')
 
             if cnt_N == num_Ns - 1:
@@ -434,7 +434,7 @@ def plot_experiment_number_particles(Vs_tot, dt, maxit, Ds, Gammas, Ns, title):
 
 
 def plot_experiment_number_particles_comparison(Vs_tot, dt, maxit, Ds, Gammas, Ns, title):
-    
+
     num_Ds = len(Ds)
     cmap = plt.get_cmap("inferno")
     markers = ['o', 'd', 's', 'v']
@@ -442,34 +442,34 @@ def plot_experiment_number_particles_comparison(Vs_tot, dt, maxit, Ds, Gammas, N
     fig, ax = plt.subplots(1, num_Ds, layout='constrained', figsize=(12, 4), sharey=True, sharex=True)
     for (cnt_d, d) in enumerate(Ds):
         for (cnt_rad, Rad) in enumerate(Gammas):
-            # acc_min = [] 
-            acc_mean = [] 
-            # acc_max = [] 
+            # acc_min = []
+            acc_mean = []
+            # acc_max = []
             for (cnt_N, N) in enumerate(Ns):
                 # acc_min.append(np.min(Vs_tot[:, :, cnt_d, cnt_rad, cnt_N],axis=0)[-1])
                 acc_mean.append(np.mean(Vs_tot[:, :, cnt_d, cnt_rad, cnt_N],axis=0)[-1])
                 # acc_max.append(np.max(Vs_tot[:, :, cnt_d, cnt_rad, cnt_N],axis=0)[-1])
-            if isinstance(Rad, float): 
+            if isinstance(Rad, float):
                 cmap = plt.get_cmap("inferno")
                 label = rf"$\gamma={Rad}$"
-            else: 
-                if "CBO" in Rad: 
+            else:
+                if "CBO" in Rad:
                     cmap = plt.get_cmap("cividis")
-                else: 
-                    cmap = plt.get_cmap("viridis")    
+                else:
+                    cmap = plt.get_cmap("viridis")
                 label = Rad
-            
+
             color = cmap(0.1 + 0.8 * cnt_rad / (len(Gammas)-1))
-            # ax[cnt_d].loglog(Ns, acc_min, linestyle=":", color=color)        
-            ax[cnt_d].loglog(Ns, acc_mean, label=label, color=color, marker = markers[cnt_rad])        
-            # ax[cnt_d].loglog(Ns, acc_max, linestyle="--", color=color)        
+            # ax[cnt_d].loglog(Ns, acc_min, linestyle=":", color=color)
+            ax[cnt_d].loglog(Ns, acc_mean, label=label, color=color, marker = markers[cnt_rad])
+            # ax[cnt_d].loglog(Ns, acc_max, linestyle="--", color=color)
             # ax[cnt_d].fill_between(Ns, acc_min, acc_max, color=color, alpha=0.1)
 
         ax[cnt_d].set_xlabel(r'particles $N$')
         ax[cnt_d].set_ylim([1e-13,1e6])
         ax[cnt_d].set_title(rf'$d = {d}$')
         ax[cnt_d].grid('on')
-    
+
     handles, labels = ax[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc='upper center', ncol=len(labels), bbox_to_anchor=(0.545, 0.93), framealpha=1)
 
